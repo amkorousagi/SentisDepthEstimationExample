@@ -20,6 +20,7 @@ public class InferenceWebcam : MonoBehaviour
     int modelLayerCount = 0;
     public int framesToExectute = 2;
     private Stopwatch _stopwatch;
+    private Stopwatch _stopwatch2;
     
     void Start()
     {
@@ -46,55 +47,51 @@ public class InferenceWebcam : MonoBehaviour
         inputTensor = TensorFloat.Zeros(new TensorShape(1, 3, 256, 256));
 
         _stopwatch = new Stopwatch();
+        _stopwatch2 = new Stopwatch();
+        StartCoroutine(CPU());
+        StartCoroutine(GPU());
+
     }
 
     bool executionStarted = false;
     IEnumerator executionSchedule;
-    private void Update()
-    {
-        _stopwatch.Restart();
-        TextureConverter.ToTensor(webcamTexture, inputTensor, new TextureTransform());
-        // if (!executionStarted)
-        // {
-        //     _stopwatch.Restart();
-        //     TextureConverter.ToTensor(webcamTexture, inputTensor, new TextureTransform());
-        //     executionSchedule = m_engineEstimation.StartManualSchedule(inputTensor);
-        //     executionStarted = true;
-        // }
 
-        // bool hasMoreWork = false;
-        // int layersToRun = (modelLayerCount + framesToExectute - 1) / framesToExectute; // round up
-        // for (int i = 0; i < layersToRun; i++)
-        // {
-        //     hasMoreWork = executionSchedule.MoveNext();
-        //     if (!hasMoreWork)
-        //         break;
-        // }
-        //
-        // if (hasMoreWork)
-        //     return;
-        m_engineEstimation.Execute(inputTensor);
-        var output = m_engineEstimation.PeekOutput() as TensorFloat;
-        output.MakeReadable();
-        output.ToReadOnlyArray();
-        // output = output.ShallowReshape(output.shape.Unsqueeze(0)) as TensorFloat;
-        // TextureConverter.RenderToTexture(output as TensorFloat, outputTexture, new TextureTransform().SetCoordOrigin(CoordOrigin.BottomLeft));
-        // executionStarted = false;
-        _stopwatch.Stop();
-        print("infer time gpu : " + _stopwatch.ElapsedMilliseconds+"ms");
+    IEnumerator GPU()
+    {
+        while (true)
+        {
+            _stopwatch.Restart();
+            TextureConverter.ToTensor(webcamTexture, inputTensor, new TextureTransform());
         
-        
-        _stopwatch.Restart();
-        TextureConverter.ToTensor(webcamTexture, inputTensor, new TextureTransform());
-        
-        m_engineEstimationCPU.Execute(inputTensor);
-        var output2 = m_engineEstimationCPU.PeekOutput() as TensorFloat;
-        output2.MakeReadable();
-        output2.ToReadOnlyArray();
-        _stopwatch.Stop();
-        print("infer time cpu : " + _stopwatch.ElapsedMilliseconds+"ms");
-        
+            m_engineEstimation.Execute(inputTensor);
+            var output = m_engineEstimation.PeekOutput() as TensorFloat;
+            output.MakeReadable();
+            output.ToReadOnlyArray();
+            _stopwatch.Stop();
+            print("infer time gpu : " + _stopwatch.ElapsedMilliseconds+"ms");
+            yield return null;
+        }
     }
+    
+    IEnumerator CPU()
+    {
+        while (true)
+        {
+            _stopwatch2.Restart();
+            TextureConverter.ToTensor(webcamTexture, inputTensor, new TextureTransform());
+        
+            m_engineEstimationCPU.Execute(inputTensor);
+            var output2 = m_engineEstimationCPU.PeekOutput() as TensorFloat;
+            output2.MakeReadable();
+            output2.ToReadOnlyArray();
+            _stopwatch2.Stop();
+            print("infer time cpu : " + _stopwatch2.ElapsedMilliseconds+"ms");
+            yield return null;
+
+        }
+    }
+
+    
 
     void OnRenderObject()
     {
