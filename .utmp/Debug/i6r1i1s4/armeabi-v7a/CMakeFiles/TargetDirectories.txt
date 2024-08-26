@@ -1,0 +1,5 @@
+/Users/s-alpha/sentis-samples/DepthEstimationSample/.utmp/Debug/i6r1i1s4/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/s-alpha/sentis-samples/DepthEstimationSample/.utmp/Debug/i6r1i1s4/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/s-alpha/sentis-samples/DepthEstimationSample/.utmp/Debug/i6r1i1s4/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/s-alpha/sentis-samples/DepthEstimationSample/.utmp/Debug/i6r1i1s4/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/s-alpha/sentis-samples/DepthEstimationSample/.utmp/Debug/i6r1i1s4/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

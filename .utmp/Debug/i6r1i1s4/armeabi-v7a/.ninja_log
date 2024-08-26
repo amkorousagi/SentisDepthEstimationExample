@@ -1,0 +1,3 @@
+# ninja log v5
+0	136	1724649161308875200	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	84f9f8e54509d776
+136	244	1724649161400637586	/Users/s-alpha/sentis-samples/DepthEstimationSample/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/Debug/i6r1i1s4/obj/armeabi-v7a/libswappywrapper.so	c8cde856d745dcc0

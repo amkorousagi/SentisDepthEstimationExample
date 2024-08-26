@@ -1,0 +1,9 @@
+
+=== Mon Aug 26 13:51:36 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ide.rider from version 3.0.26 to 3.0.27
+  com.unity.render-pipelines.universal from version 16.0.4 to 16.0.5
